@@ -33,7 +33,7 @@
 % \setDocCurator{The Curator of this Document}
 
 \setDocAbstract{%
-At the NSF-DOE Vera C. Rubin Observatory we write data from the LSSTCam and LATISS instruments using FITS format. Here we discuss the layout of those FITS files and the describe the FITS headers.
+At the NSF-DOE Vera C. Rubin Observatory we write data from the LSSTCam and LATISS instruments using FITS format with one file written per detector. Here we discuss the layout of those FITS files and describe the FITS headers.
 }
 
 % Change history defined here.
@@ -55,7 +55,58 @@ At the NSF-DOE Vera C. Rubin Observatory we write data from the LSSTCam and LATI
 % ADD CONTENT HERE
 % You can also use the \input command to include several content files.
 
+\section{Introduction}
+
+All three cameras at the NSF-DOE Vera C.\ Rubin Observatory, (LSSTCam \citep{10.71929/rubin/2571927}, LATISS \citep{10.71929/rubin/2571930}, and LSSTComCam \citep{10.71929/rubin/2561361}) write FITS output files in the same structure with some minor variations in the FITS headers indicating different software versions and capabilities.
+
+\citeds{LCA-10140} defines the file format used for the test stand at SLAC and \citeds{LSE-400} describes an example header that was used early in the construction project.
+This document describes the delivered system and any evolution of the format that happens during the observatory lifetime.
+
+\section{Structure}
+
+The basic layout of a Rubin camera FITS file is shown in Fig.~\ref{fig:layout}.
+There is a primary header, with no data, containing the FITS headers for this observation.
+Then there are 16 HDUs, named \texttt{SegmentNN}, with the data from each amplifier along with headers specific to that amplifier.
+The data values are 32-bit integers compressed using the Rice compression algorithm \citep{2012arXiv1201.1336W}.
+Finally there are two extensions describing the condition of the readout electronics board (\texttt{REB\_COND}) and checksums calculated from the camera configuration (\texttt{CONFIG\_COND}).
+
+\begin{figure}
+\begin{verbatim}
+No.    Name      Ver    Type      Cards   Dimensions   Format
+  0  PRIMARY       1 PrimaryHDU     134   ()
+  1  Segment10     1 CompImageHDU    115   (576, 2048)   int32
+  2  Segment11     1 CompImageHDU    115   (576, 2048)   int32
+  3  Segment12     1 CompImageHDU    115   (576, 2048)   int32
+  4  Segment13     1 CompImageHDU    115   (576, 2048)   int32
+  5  Segment14     1 CompImageHDU    115   (576, 2048)   int32
+  6  Segment15     1 CompImageHDU    115   (576, 2048)   int32
+  7  Segment16     1 CompImageHDU    115   (576, 2048)   int32
+  8  Segment17     1 CompImageHDU    115   (576, 2048)   int32
+  9  Segment07     1 CompImageHDU    115   (576, 2048)   int32
+ 10  Segment06     1 CompImageHDU    115   (576, 2048)   int32
+ 11  Segment05     1 CompImageHDU    115   (576, 2048)   int32
+ 12  Segment04     1 CompImageHDU    115   (576, 2048)   int32
+ 13  Segment03     1 CompImageHDU    115   (576, 2048)   int32
+ 14  Segment02     1 CompImageHDU    115   (576, 2048)   int32
+ 15  Segment01     1 CompImageHDU    115   (576, 2048)   int32
+ 16  Segment00     1 CompImageHDU    115   (576, 2048)   int32
+ 17  REB_COND      1 BinTableHDU    107   0R x 0C   []
+ 18  CONFIG_COND    1 BinTableHDU     26   0R x 0C   []
+\end{verbatim}
+\caption{Layout of a LSSTCam raw file.}
+\label{fig:layout}
+\end{figure}
+
+\section{FITS Headers}
+
+\subsection{Primary Header}
+
 \appendix
+
+\section{Version Changes}
+
+When the FITS header schema is changed in any way there is a corresponding increment to the value stored in the \texttt{HEADVER} FITS card.
+This document describes the file format starting with version 2, which is the version that was used to begin commissioning.
 
 \section{Acknowledgements}
 
