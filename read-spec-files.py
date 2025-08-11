@@ -108,7 +108,21 @@ def escape_latex(text: str) -> str:
         text = text.replace(old, new)
     return text
 
-def write_as_latex(file: str, groups: dict[str, str], specs: dict[str, Card]):
+
+def get_header_version(specs: dict[str, Card]) -> str:
+    """Extract the header version from the specifications."""
+    for card in specs.values():
+        if card.header == "HEADVER":
+            return card.spec
+    return "Unknown"
+
+
+def write_as_latex(
+    file: str,
+    groups: dict[str, str],
+    specs: dict[str, Card],
+    header_version: str = "Unknown",
+):
     """Write the specifications to a LaTeX table format.
 
     Write each group out as a separate table and only include
@@ -116,18 +130,30 @@ def write_as_latex(file: str, groups: dict[str, str], specs: dict[str, Card]):
     """
     # Group headers by their group name
     grouped_specs = {}
+
+    # Seed the order from the supplied groups.
+    grouped_specs["None"] = []
+    for group_name in groups:
+        grouped_specs[group_name] = []
+
     for card in specs.values():
         group = card.group
-        if group not in grouped_specs:
-            grouped_specs[group] = []
         grouped_specs[group].append(card)
+        if card.header == "HEADVER":
+            header_version = card.spec
 
     with open(file, "w") as f:
-        for group, description in groups.items():
-            cards = grouped_specs.get(group, [])
+        print(f"Header Version: {header_version}", file=f)
+
+        for group_name, cards in grouped_specs.items():
             if not cards:
                 continue
-
+            description = groups.get(group_name)
+            if not description:
+                if group_name == "None":
+                    description = "No Group Assigned"
+                else:
+                    description = group_name + " Group"
             # Remove the ---- from start and end of the description.
             description = re.sub("--+", "", description)
             description = escape_latex(description.strip())
@@ -143,7 +169,7 @@ Header & Type & Description \\
 
             for spec in cards:
                 f.write(
-                    f"{escape_latex(spec.header)} & "
+                    f"{escape_latex(spec.header.replace(".", " "))} & "
                     f"{escape_latex(spec.type)} & "
                     f"{escape_latex(spec.description)} \\\\\n"
                 )
@@ -163,7 +189,9 @@ lsstcam_primary_files = [
 
 groups, result = combine_spec_files(baseURL, lsstcam_primary_files)
 
-write_as_latex("lsstcam-primary.tex", groups, result)
+header_version = get_header_version(result)
+
+write_as_latex("lsstcam-primary.tex", groups, result, header_version)
 
 auxtel_primary_files = [
     "primary-groups",
@@ -176,4 +204,14 @@ auxtel_primary_files = [
 at_groups, result = combine_spec_files(baseURL, auxtel_primary_files)
 groups.update(at_groups)
 
-write_as_latex("auxtel-primary.tex", groups, result)
+write_as_latex("auxtel-primary.tex", groups, result, header_version)
+
+# Amplifier header.
+amplifier_files = [
+    "extended",
+]
+amplifier_groups, result = combine_spec_files(baseURL, amplifier_files)
+groups.update(amplifier_groups)
+
+print("\n\n-----\n\n")
+write_as_latex("amplifier.tex", groups, result, header_version)

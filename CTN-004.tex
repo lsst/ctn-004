@@ -59,7 +59,7 @@ At the NSF-DOE Vera C. Rubin Observatory we write data from the LSSTCam and LATI
 
 All three cameras at the NSF-DOE Vera C.\ Rubin Observatory, (LSSTCam \citep{10.71929/rubin/2571927}, LATISS \citep{10.71929/rubin/2571930}, and LSSTComCam \citep{10.71929/rubin/2561361}) write FITS output files in the same structure with some minor variations in the FITS headers indicating different software versions and capabilities.
 
-\citeds{LCA-10140} defines the file format used for the test stand at SLAC and \citeds{LSE-400} describes an example header that was used early in the construction project.
+\citeds{LCA-10140} and \citeds{LCA-13501} define the file format used for the test stand at SLAC and \citeds{LSE-400} describes an example header that was used early in the construction project.
 This document describes the delivered system and any evolution of the format that happens during the observatory lifetime.
 
 \section{Structure}
@@ -103,11 +103,17 @@ No.    Name      Ver    Type      Cards   Dimensions   Format
 
 \subsection{LSSTCam Header}
 
-\include{lsstcam-primary.tex}
+The definitions of how specific timing FITS headers relate to events inside the camera are described in \citeds{CTN-005}.
+
+\input{lsstcam-primary}
 
 \subsection{LATISS Header}
 
-\include{auxtel-primary.tex}
+\input{auxtel-primary}
+
+\subsection{Amplifier Header}
+
+\input{amplifier}
 
 \appendix
 

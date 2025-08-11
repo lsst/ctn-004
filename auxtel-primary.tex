@@ -1,3 +1,22 @@
+Header Version: 2
+
+\subsubsection{No Group Assigned}
+
+
+\begin{tabular}{l l l l l}
+\hline
+Header & Type & Description \\
+\hline
+ORIGIN & String & Which site acquired the data \\
+BINX & Integer & [pixels] binning along X axis \\
+BINY & Integer & [pixels] binning along Y axis \\
+CCDGAIN & Float & Rough guess at overall system gain (e-/DNB) \\
+CCDNOISE & Float & Rough guess at system noise (e- rms) \\
+DETSIZE & String &  \\
+CCDTEMP & Float & CCD temperature \\
+\hline
+\end{tabular}
+
 
 \subsubsection{Date, night and basic image information}
 
@@ -279,11 +298,11 @@ FILENAME & String & Original name of the file \\
 \hline
 Header & Type & Description \\
 \hline
-HIERARCH.SIMULATE.ATMCS & String & ATMCS Simulation Mode (False=0) \\
-HIERARCH.SIMULATE.ATHEXAPOD & String & ATHexapod Simulation Mode (False=0) \\
-HIERARCH.SIMULATE.ATPNEUMATICS & String & ATPneumatics Simulation Mode (False=0) \\
-HIERARCH.SIMULATE.ATDOME & String & ATDome Simulation Mode (False=0) \\
-HIERARCH.SIMULATE.ATSPECTROGRAPH & String & ATSpectrograph Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATMCS & String & ATMCS Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATHEXAPOD & String & ATHexapod Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATPNEUMATICS & String & ATPneumatics Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATDOME & String & ATDome Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATSPECTROGRAPH & String & ATSpectrograph Simulation Mode (False=0) \\
 \hline
 \end{tabular}
 
@@ -295,9 +314,9 @@ HIERARCH.SIMULATE.ATSPECTROGRAPH & String & ATSpectrograph Simulation Mode (Fals
 \hline
 Header & Type & Description \\
 \hline
-HIERARCH.STUTTER.ROWS & Integer & The number of row shifts per stutter \\
-HIERARCH.STUTTER.DELAY & Float & [s] The delay between stutters \\
-HIERARCH.STUTTER.NSHIFTS & Integer & The number of stutters \\
+HIERARCH STUTTER ROWS & Integer & The number of row shifts per stutter \\
+HIERARCH STUTTER DELAY & Float & [s] The delay between stutters \\
+HIERARCH STUTTER NSHIFTS & Integer & The number of stutters \\
 \hline
 \end{tabular}
 
