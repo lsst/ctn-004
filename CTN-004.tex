@@ -71,6 +71,7 @@ The data values are 32-bit integers compressed using the Rice compression algori
 Finally there are two extensions describing the condition of the readout electronics board (\texttt{REB\_COND}) and checksums calculated from the camera configuration (\texttt{CONFIG\_COND}).
 
 \begin{figure}
+  \begin{center}
 \begin{verbatim}
 No.    Name      Ver    Type      Cards   Dimensions   Format
   0  PRIMARY       1 PrimaryHDU     134   ()
@@ -93,20 +94,34 @@ No.    Name      Ver    Type      Cards   Dimensions   Format
  17  REB_COND      1 BinTableHDU    107   0R x 0C   []
  18  CONFIG_COND    1 BinTableHDU     26   0R x 0C   []
 \end{verbatim}
+\end{center}
 \caption{Layout of a LSSTCam raw file.}
 \label{fig:layout}
 \end{figure}
 
 \section{FITS Headers}
 
-\subsection{Primary Header}
+\subsection{LSSTCam Header}
+
+\include{lsstcam-primary.tex}
+
+\subsection{LATISS Header}
+
+\include{auxtel-primary.tex}
 
 \appendix
 
 \section{Version Changes}
 
 When the FITS header schema is changed in any way there is a corresponding increment to the value stored in the \texttt{HEADVER} FITS card.
-This document describes the file format starting with version 2, which is the version that was used to begin commissioning.
+This document describes the file format starting with version 2, which is the version that was used from the beginning of commissioning.
+
+\subsection{Version 3}
+
+\begin{itemize}
+\item The \texttt{DATE} header is now correctly being reported in UTC timescale, conforming with the FITS standard \citep{2010A&A...524A..42P}.
+\item Removed the \texttt{MJD} header card as it was confusing to users since whilst \texttt{DATE} is part of the standard, the MJD equivalent is not, and it would not be clear whether it was UTC or matched \texttt{TIMESYS}.
+\end{itemize}
 
 \section{Acknowledgements}
 
