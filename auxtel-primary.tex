@@ -1,0 +1,305 @@
+Header Version: 2
+
+\subsubsection{No Group Assigned}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+ORIGIN & String & Which site acquired the data \\
+BINX & Integer & [pixels] binning along X axis \\
+BINY & Integer & [pixels] binning along Y axis \\
+CCDGAIN & Float & Rough guess at overall system gain (e-/DNB) \\
+CCDNOISE & Float & Rough guess at system noise (e- rms) \\
+DETSIZE & String &  \\
+CCDTEMP & Float & CCD temperature \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Date, night and basic image information}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+DATE & Date & Creation Date and Time of File \\
+MJD & MJD & Modified Julian Date that the file was written \\
+IMGTYPE & String & BIAS, DARK, FE55, FLAT, FLAT\_<lam>, SPOT, PPUMP \\
+DATE-OBS & Date & Time at the start of integration \\
+MJD-OBS & MJD & Modified Julian Date derived from DATE-OBS \\
+DATE-TRG & Date & TAI Date of the image trigger (readout) \\
+MJD-TRG & MJD & Modified Julian Date of image trigger \\
+OBSID & String & The image name or obs-id \\
+DATE-BEG & Date & Time at the start of integration \\
+MJD-BEG & MJD & Modified Julian Date derived from DATE-BEG \\
+DATE-END & Date & End date of the observation \\
+MJD-END & MJD & Date derived from DATE-END \\
+BUNIT & String & Brightness units for pixel array \\
+TIMESYS & String & The time scale used \\
+GROUPID & String &  \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Telescope info, location, observer}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+INSTRUME & String & Instrument \\
+TELESCOP & String & Telescope \\
+OBS-LONG & String & [deg] Observatory east longitude \\
+OBS-LAT & String & [deg] Observatory latitude \\
+OBS-ELEV & String & [m] Observatory elevation \\
+OBSGEO-X & String & [m] X-axis Geocentric coordinate \\
+OBSGEO-Y & String & [m] Y-axis Geocentric coordinate \\
+OBSGEO-Z & String & [m] Z-axis Geocentric coordinate \\
+FACILITY & String & Facility name \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Pointing info, etc.}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+RA & String & RA commanded from pointing component \\
+DEC & String & DEC commanded from pointing component \\
+RASTART & String & RA of telescope from AZSTART and ELSTART \\
+DECSTART & String & DEC of telescope from AZSTART and ELSTART \\
+RAEND & String & RA of telescope from AZEND and ELEND \\
+DECEND & String & DEC of telescope from AZEND and ELEND \\
+ROTPA & String & Rotation angle relative to the sky (deg) \\
+ROTCOORD & String & Telescope Rotation Coordinates \\
+HASTART & String & [HH:MM:SS] Telescope hour angle at start \\
+ELSTART & String & [deg] Telescope zenith distance at start \\
+AZSTART & String & [deg] Telescope azimuth angle at start \\
+AMSTART & String & Airmass at start \\
+HAEND & String & [HH:MM:SS] Telescope hour angle at end \\
+ELEND & String & [deg] Telescope zenith distance at end \\
+AZEND & String & [deg] Telescope azimuth angle at end \\
+AMEND & String & Airmass at end \\
+TRACKSYS & String & Tracking system RADEC, AZEL, PLANET, EPHEM \\
+RADESYS & String & Equatorial coordinate system FK5 or ICRS \\
+FOCUSZ & String & Focus Z position \\
+OBJECT & String & Name of the observed object \\
+VIGNETTE & String & Is the telescope vignetted? \\
+VIGN\_MIN & String & Minimum vignetting? \\
+SHUTLOWR & String & Dome Dropout Door Opening Percentage \\
+SHUTUPPR & String & Dome Main Door Opening Percentage \\
+DOMEAZ & String & [deg] Dome Azimuth Position \\
+INSTPORT & String & The instrument port where LATISS is installed \\
+ATM3PORT & String & The port the M3 is directing light into \\
+\hline
+\end{tabular}
+
+
+\subsubsection{TAN Projection}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+WCSAXES & String & WCS Dimensionality \\
+CTYPE1 & String & Coordinate type \\
+CTYPE2 & String & Coordinate type \\
+CUNIT1 & String &  \\
+CUNIT2 & String &  \\
+CRVAL1 & String & [deg] WCS Reference Coordinate (RA) \\
+CRVAL2 & String & [deg] WCS Reference Coordinate (DEC) \\
+CRPIX1 & String & Reference pixel axis 1 \\
+CRPIX2 & String & Reference pixel axis 2 \\
+CD1\_1 & String & DL/DX World coordinate transformation matrix \\
+CD1\_2 & String & DL/DY World coordinate transformation matrix \\
+CD2\_1 & String & DM/DX World coordinate transformation matrix \\
+CD2\_2 & String & DM/DY World coordinate transformation matrix \\
+EQUINOX & String & Equinox of coordinates \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Image-identifying used to build OBS-ID}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+TESTTYPE & String & BIAS, DARK, FE55, FLAT, LAMBDA, PERSISTENCE, SPOT, SFLAT\_<lam>, TRAP \\
+CAMCODE & String & The "code" for AuxTel | ComCam | Main Camera \\
+CONTRLLR & String & The controller (e.g. O for OCS, C for CCS) \\
+DAYOBS & String & The observation day as defined in the image name  \\
+SEQNUM & Integer & The sequence number from the image name \\
+EMUIMAGE & String & Image being emulated (from 2-day store) \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Additional Keys Information from Camera}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+PROGRAM & String & Name of the program \\
+REASON & String & Reason for observation \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Image sequence numbers}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+CURINDEX & Integer & Index number for exposure within the sequence \\
+MAXINDEX & Integer & Number of requested images in sequence \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Test Stand information}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+TSTAND & String & Camera test stand BOT or CCOB \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Information from Camera (Common block)}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+IMAGETAG & String & DAQ Image id (Hex) \\
+OBSANNOT & String & DAQ image annotation \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Information from Camera}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+RUNNUM & String & The Run Number \\
+CONTROLL & String & Duplicates INSTRUME \\
+CCD\_MANU & String & CCD Manufacturer \\
+CCD\_TYPE & String & CCD Model Number \\
+TEMP\_SET & Float & CCD Temperature set point (deg C) \\
+CCDSLOT & String & The CCD Slot \\
+RAFTBAY & String & The RAFT Bay \\
+FIRMWARE & String & DAQ firmware version (Hex) \\
+PLATFORM & String & DAQ platform version \\
+CONTNUM & String & REB serial \# (Hex) \\
+DAQVERS & String & DAQ version \\
+DAQPART & String & DAQ partition \\
+DAQFOLD & String & DAQ folder the image was initially created in \\
+SEQFILE & String & Sequencer file name \\
+SEQNAME & String & Sequencer file name \\
+SEQCKSUM & String & Checksum of Sequencer \\
+LSST\_NUM & String & LSST Assigned CCD Number \\
+CCD\_SERN & String & Manufacturers’ CCD Serial Number \\
+REBNAME & String & LSST Assigned Name REB name \\
+RAFTNAME & String & LSST Assigned Raft name \\
+FPVERS & String & The focal-plane version number \\
+IHVERS & String & The image-handling version number \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Filter/grating information}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+GRATING & String & Name of physical grating \\
+GRATBAND & String & Descriptive name \\
+GRATSLOT & String & Grating's slot (1-indexed) \\
+LINSPOS & String & Position of slide \\
+FILTBAND & String & Name of the filter band \\
+FILTER & String & Name of the physical filter \\
+FILTPOS & String & Filter measured position of slide \\
+FILTSLOT & String & Filter home slot \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Exposure-related information}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+EXPTIME & Float & Exposure Time in Seconds \\
+DARKTIME & Float & Dark Time in Seconds (see TSEIA-91) \\
+SHUTTIME & String & Shutter exposure time \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Weather information}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+AIRTEMP & String & Position of slide \\
+PRESSURE & String & [Pascals] Atmospheric Pressure \\
+HUMIDITY & String & Percentage of Relative Humidity \\
+WINDSPD & String & [m/s] Wind Speed \\
+WINDDIR & String & [deg] Wind Direction \\
+SEEING & String & [arcsec] Seeing from FWHM DIMM measurement \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Header information}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+HEADVER & Integer & Version number of header \\
+FILENAME & String & Original name of the file \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Hierarch information for CSC Simulatiom Mode}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+HIERARCH SIMULATE ATMCS & String & ATMCS Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATHEXAPOD & String & ATHexapod Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATPNEUMATICS & String & ATPneumatics Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATDOME & String & ATDome Simulation Mode (False=0) \\
+HIERARCH SIMULATE ATSPECTROGRAPH & String & ATSpectrograph Simulation Mode (False=0) \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Stuttered Image Support}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+HIERARCH STUTTER ROWS & Integer & The number of row shifts per stutter \\
+HIERARCH STUTTER DELAY & Float & [s] The delay between stutters \\
+HIERARCH STUTTER NSHIFTS & Integer & The number of stutters \\
+\hline
+\end{tabular}
+
