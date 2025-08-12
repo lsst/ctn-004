@@ -130,6 +130,9 @@ The definitions of how specific timing FITS headers relate to events inside the 
 When the FITS header schema is changed in any way there is a corresponding increment to the value stored in the \texttt{HEADVER} FITS card.
 This document describes the file format starting with version 2, which is the version that was used from the beginning of commissioning.
 
+Errors in the contents of specific FITS headers are not documented here but are instead handled by the \texttt{astro\_metadata\_translator} package \footnote{\url{https://astro-metadata-translator.lsst.io/}} in conjunction with the \texttt{obs\_lsst} package that are both part of the LSST Science Pipelines \citedsp{PSTN-019}.
+In particular, if you are not using the LSST Science Pipelines to read the raw data via the Data Butler \citep{2022SPIE12189E..11J}, some headers are likely to be incorrect or missing if you do not manually run the \texttt{astro\_metadata\_translator.fix\_header()} function on the primary header.
+
 \subsection{Version 3}
 
 \begin{itemize}
