@@ -136,8 +136,10 @@ def write_as_latex(
     for group_name in groups:
         grouped_specs[group_name] = []
 
+    found_groups = set()
     for card in specs.values():
         group = card.group
+        found_groups.add(group)
         grouped_specs[group].append(card)
         if card.header == "HEADVER":
             header_version = card.spec
@@ -148,22 +150,37 @@ def write_as_latex(
         for group_name, cards in grouped_specs.items():
             if not cards:
                 continue
+            using_default_group_name = False
             description = groups.get(group_name)
             if not description:
                 if group_name == "None":
                     description = "No Group Assigned"
+                    using_default_group_name = True
                 else:
                     description = group_name + " Group"
             # Remove the ---- from start and end of the description.
             description = re.sub("--+", "", description)
             description = escape_latex(description.strip())
 
+            use_longtable = len(cards) > 30
+
+            if use_longtable:
+                environment = "longtable"
+            else:
+                environment = "tabular"
+
+            # If there is only one group and it is using the default name,
+            # then we do not use a section.
+            if using_default_group_name and len(found_groups) == 1:
+                section_text = ""
+            else:
+                section_text = rf"\subsubsection{{{description}}}"
+
             print(rf"""
-\subsubsection{{{description}}}
+{section_text}
+\begin{{{environment}}}{{l l l l l}}
 """, file=f)
-            print(r"""
-\begin{tabular}{l l l l l}
-\hline
+            print(r"""\hline
 Header & Type & Description \\
 \hline""", file=f)
 
@@ -173,8 +190,8 @@ Header & Type & Description \\
                     f"{escape_latex(spec.type)} & "
                     f"{escape_latex(spec.description)} \\\\\n"
                 )
-            print(r"""\hline
-\end{tabular}
+            print(rf"""\hline
+\end{{{environment}}}
 """, file=f)
 
 
@@ -213,5 +230,23 @@ amplifier_files = [
 amplifier_groups, result = combine_spec_files(baseURL, amplifier_files)
 groups.update(amplifier_groups)
 
-print("\n\n-----\n\n")
 write_as_latex("amplifier.tex", groups, result, header_version)
+
+
+# REB
+amplifier_files = [
+    "reb_cond",
+]
+reb_groups, result = combine_spec_files(baseURL, amplifier_files)
+groups.update(reb_groups)
+
+write_as_latex("reb_cond.tex", groups, result, header_version)
+
+# Config
+amplifier_files = [
+    "config_cond",
+]
+config_groups, result = combine_spec_files(baseURL, amplifier_files)
+groups.update(config_groups)
+
+write_as_latex("config_cond.tex", groups, result, header_version)
