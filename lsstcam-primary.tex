@@ -1,4 +1,4 @@
-Header Version: 2
+Header Version: 101
 
 \subsubsection{No Group Assigned}
 \begin{tabular}{l l l l l}
@@ -22,8 +22,8 @@ DETSIZE & String &  \\
 \hline
 Header & Type & Description \\
 \hline
-DATE & Date & Creation Date and Time of File \\
-MJD & MJD & Modified Julian Date that the file was written \\
+DATE & DateUTC & Creation Date and Time of file (UTC) \\
+MJD & MJDUTC & Creation MJD of file (UTC) \\
 IMGTYPE & String & BIAS, DARK, FE55, FLAT, FLAT\_<lam>, SPOT, PPUMP \\
 DATE-OBS & Date & Time at the start of integration \\
 MJD-OBS & MJD & Modified Julian Date derived from DATE-OBS \\
@@ -49,12 +49,12 @@ Header & Type & Description \\
 \hline
 INSTRUME & String & Instrument \\
 TELESCOP & String & Telescope \\
-OBS-LONG & String & [deg] Observatory east longitude \\
-OBS-LAT & String & [deg] Observatory latitude \\
-OBS-ELEV & String & [m] Observatory elevation \\
-OBSGEO-X & String & [m] X-axis Geocentric coordinate \\
-OBSGEO-Y & String & [m] Y-axis Geocentric coordinate \\
-OBSGEO-Z & String & [m] Z-axis Geocentric coordinate \\
+OBS-LONG & Float & [deg] Observatory east longitude \\
+OBS-LAT & Float & [deg] Observatory latitude \\
+OBS-ELEV & Float & [m] Observatory elevation \\
+OBSGEO-X & Float & [m] X-axis Geocentric coordinate \\
+OBSGEO-Y & Float & [m] Y-axis Geocentric coordinate \\
+OBSGEO-Z & Float & [m] Z-axis Geocentric coordinate \\
 \hline
 \end{tabular}
 
@@ -65,25 +65,25 @@ OBSGEO-Z & String & [m] Z-axis Geocentric coordinate \\
 \hline
 Header & Type & Description \\
 \hline
-RA & String & RA commanded from pointing component \\
-DEC & String & DEC commanded from pointing component \\
-RASTART & String & RA of telescope from AZSTART and ELSTART \\
-DECSTART & String & DEC of telescope from AZSTART and ELSTART \\
-RAEND & String & RA of telescope from AZEND and ELEND \\
-DECEND & String & DEC of telescope from AZEND and ELEND \\
-ROTPA & String & Rotation angle relative to the sky (deg) \\
+RA & Float & RA commanded from pointing component \\
+DEC & Float & DEC commanded from pointing component \\
+RASTART & Float & RA of telescope from AZSTART and ELSTART \\
+DECSTART & Float & DEC of telescope from AZSTART and ELSTART \\
+RAEND & Float & RA of telescope from AZEND and ELEND \\
+DECEND & Float & DEC of telescope from AZEND and ELEND \\
+ROTPA & Float & [deg] Rotation angle relative to the sky \\
 ROTCOORD & String & Telescope Rotation Coordinates \\
-HASTART & String & [HH:MM:SS] Telescope hour angle at start \\
-ELSTART & String & [deg] Telescope zenith distance at start \\
-AZSTART & String & [deg] Telescope azimuth angle at start \\
-AMSTART & String & Airmass at start \\
-HAEND & String & [HH:MM:SS] Telescope hour angle at end \\
-ELEND & String & [deg] Telescope zenith distance at end \\
-AZEND & String & [deg] Telescope azimuth angle at end \\
-AMEND & String & Airmass at end \\
+HASTART & Float & [hour] Telescope hour angle at start \\
+ELSTART & Float & [deg] Telescope zenith distance at start \\
+AZSTART & Float & [deg] Telescope azimuth angle at start \\
+AMSTART & Float & Airmass at start \\
+HAEND & Float & [hour] Telescope hour angle at end \\
+ELEND & Float & [deg] Telescope zenith distance at end \\
+AZEND & Float & [deg] Telescope azimuth angle at end \\
+AMEND & Float & Airmass at end \\
 TRACKSYS & String & Tracking system RADEC, AZEL, PLANET, EPHEM \\
 RADESYS & String & Equatorial coordinate system FK5 or ICRS \\
-FOCUSZ & String & Focus Z position \\
+FOCUSZ & Float & Focus Z position \\
 OBJECT & String & Name of the observed object \\
 VIGNETTE & String & Is the telescope vignetted? \\
 VIGN\_MIN & String & Minimum vignetting? \\
@@ -207,8 +207,10 @@ FILTSLOT & Integer & Filter home slot \\
 Header & Type & Description \\
 \hline
 EXPTIME & Float & Exposure Time in Seconds \\
-DARKTIME & Float & Dark Time in Seconds (see TSEIA-91) \\
-SHUTTIME & String & Measured shutter exposure time \\
+DARKTIME & Float & Dark Time in Seconds \\
+SHUTTIME & Float & Shutter exposure time \\
+TELAPSE & Float & Elapsed integration time (same as DARKTIME) \\
+XPOSURE & Float & Effective exposure duration \\
 \hline
 \end{tabular}
 
@@ -219,12 +221,12 @@ SHUTTIME & String & Measured shutter exposure time \\
 \hline
 Header & Type & Description \\
 \hline
-AIRTEMP & String & Position of slide \\
-PRESSURE & String & [Pascals] Atmospheric Pressure \\
-HUMIDITY & String & Percentage of Relative Humidity \\
-WINDSPD & String & [m/s] Wind Speed \\
-WINDDIR & String & [deg] Wind Direction \\
-SEEING & String & [arcsec] Seeing from FWHM DIMM measurement \\
+AIRTEMP & Float & Position of slide \\
+PRESSURE & Float & [Pascals] Atmospheric Pressure \\
+HUMIDITY & Float & Percentage of Relative Humidity \\
+WINDSPD & Float & [m/s] Wind Speed \\
+WINDDIR & Float & [deg] Wind Direction \\
+SEEING & Float & [arcsec] Seeing from FWHM DIMM measurement \\
 \hline
 \end{tabular}
 
@@ -250,6 +252,36 @@ Header & Type & Description \\
 HIERARCH STUTTER ROWS & Integer & The number of row shifts per stutter \\
 HIERARCH STUTTER DELAY & Float & [s] The delay between stutters \\
 HIERARCH STUTTER NSHIFTS & Integer & The number of stutters \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Shutter Motion Profile}
+\begin{tabular}{l l l l l}
+
+\hline
+Header & Type & Description \\
+\hline
+HIERARCH SHUTTER OPEN STARTTIME TAI ISOT & String &  \\
+HIERARCH SHUTTER OPEN STARTTIME TAI MJD & Float &  \\
+HIERARCH SHUTTER OPEN SIDE & String &  \\
+HIERARCH SHUTTER OPEN MODEL & String &  \\
+HIERARCH SHUTTER OPEN HALLSENSORFIT MODELSTARTTIME & Float &  \\
+HIERARCH SHUTTER OPEN HALLSENSORFIT PIVOTPOINT1 & Float &  \\
+HIERARCH SHUTTER OPEN HALLSENSORFIT PIVOTPOINT2 & Float &  \\
+HIERARCH SHUTTER OPEN HALLSENSORFIT JERK0 & Float &  \\
+HIERARCH SHUTTER OPEN HALLSENSORFIT JERK1 & Float &  \\
+HIERARCH SHUTTER OPEN HALLSENSORFIT JERK2 & Float &  \\
+HIERARCH SHUTTER CLOSE STARTTIME TAI ISOT & String &  \\
+HIERARCH SHUTTER CLOSE STARTTIME TAI MJD & Float &  \\
+HIERARCH SHUTTER CLOSE SIDE & String &  \\
+HIERARCH SHUTTER CLOSE MODEL & String &  \\
+HIERARCH SHUTTER CLOSE HALLSENSORFIT MODELSTARTTIME & Float &  \\
+HIERARCH SHUTTER CLOSE HALLSENSORFIT PIVOTPOINT1 & Float &  \\
+HIERARCH SHUTTER CLOSE HALLSENSORFIT PIVOTPOINT2 & Float &  \\
+HIERARCH SHUTTER CLOSE HALLSENSORFIT JERK0 & Float &  \\
+HIERARCH SHUTTER CLOSE HALLSENSORFIT JERK1 & Float &  \\
+HIERARCH SHUTTER CLOSE HALLSENSORFIT JERK2 & Float &  \\
 \hline
 \end{tabular}
 
