@@ -200,7 +200,7 @@ Header & Type & Description \\
 baseURL = "https://lsst-camera-dev.slac.stanford.edu/RestFileServer/rest/version/download/misc/spec-files-combined/"
 lsstcam_primary_files = {
     "primary-groups": None,
-    "merged-primary": 15,
+    "merged-primary": 16,
     "lsstcam-primary": 5,
     "header-service-primary": 5,
     "filter": None,
