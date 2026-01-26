@@ -27,7 +27,9 @@ def split(s, maxIndex):
     return result
 
 
-def read_spec_file(url, source) -> tuple[dict[str, str], dict[str, Card]]:
+def read_spec_file(url, source, version: int | None = None) -> tuple[dict[str, str], dict[str, Card]]:
+    if version:
+        url = url + f"?version={version}"
     response = requests.get(url)
     if response.status_code == 200:
         groups = {}
@@ -59,12 +61,12 @@ def read_spec_file(url, source) -> tuple[dict[str, str], dict[str, Card]]:
         raise FileNotFoundError(url)
 
 
-def combine_spec_files(baseURL, files):
+def combine_spec_files(baseURL, files: dict[str, int | None]):
     results = {}
     groups = {}
-    for file in files:
+    for file, version in files.items():
         url = baseURL + file + ".spec"
-        group, result = read_spec_file(url, file)
+        group, result = read_spec_file(url, file, version=version)
         groups.update(group)
         results.update(result)
     return (groups, results)
@@ -196,13 +198,14 @@ Header & Type & Description \\
 
 
 baseURL = "https://lsst-camera-dev.slac.stanford.edu/RestFileServer/rest/version/download/misc/spec-files-combined/"
-lsstcam_primary_files = [
-    "primary-groups",
-    "merged-primary",
-    "lsstcam-primary",
-    "header-service-primary",
-    "filter",
-]
+lsstcam_primary_files = {
+    "primary-groups": None,
+    "merged-primary": 16,
+    "lsstcam-primary": 5,
+    "header-service-primary": 5,
+    "filter": None,
+}
+
 
 groups, result = combine_spec_files(baseURL, lsstcam_primary_files)
 
@@ -210,13 +213,13 @@ header_version = get_header_version(result)
 
 write_as_latex("lsstcam-primary.tex", groups, result, header_version)
 
-auxtel_primary_files = [
-    "primary-groups",
-    "merged-primary",
-    "ats-primary",
-    "header-service-primary",
-    "ats-header-service-primary",
-]
+auxtel_primary_files = {
+    "primary-groups": None,
+    "merged-primary": None,
+    "ats-primary": None,
+    "header-service-primary": None,
+    "ats-header-service-primary": None,
+}
 
 at_groups, result = combine_spec_files(baseURL, auxtel_primary_files)
 groups.update(at_groups)
@@ -224,9 +227,9 @@ groups.update(at_groups)
 write_as_latex("auxtel-primary.tex", groups, result, header_version)
 
 # Amplifier header.
-amplifier_files = [
-    "extended",
-]
+amplifier_files = {
+    "extended": None,
+}
 amplifier_groups, result = combine_spec_files(baseURL, amplifier_files)
 groups.update(amplifier_groups)
 
@@ -234,18 +237,18 @@ write_as_latex("amplifier.tex", groups, result, header_version)
 
 
 # REB
-amplifier_files = [
-    "reb_cond",
-]
+amplifier_files = {
+    "reb_cond": None,
+}
 reb_groups, result = combine_spec_files(baseURL, amplifier_files)
 groups.update(reb_groups)
 
 write_as_latex("reb_cond.tex", groups, result, header_version)
 
 # Config
-amplifier_files = [
-    "config_cond",
-]
+amplifier_files = {
+    "config_cond": None,
+}
 config_groups, result = combine_spec_files(baseURL, amplifier_files)
 groups.update(config_groups)
 

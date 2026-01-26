@@ -26,6 +26,7 @@
 
 \setDocRef{CTN-004}
 \setDocUpstreamLocation{\url{https://github.com/lsst/ctn-004}}
+\setDocDOI{10.71929/rubin/3011115}
 
 \date{\vcsDate}
 
@@ -41,7 +42,8 @@ At the NSF-DOE Vera C. Rubin Observatory we write data from the LSSTCam and LATI
 % Fields: VERSION, DATE, DESCRIPTION, OWNER NAME.
 % See LPM-51 for version number policy.
 \setDocChangeRecord{%
-  \addtohist{1}{YYYY-MM-DD}{Unreleased.}{Jenness}
+  \addtohist{1}{2025-08-12}{First version with basic descriptions.}{Jenness}
+  \addtohist{2}{2025-11-03}{Describer HEADVER 100, 101 and 102.}{Jenness}
 }
 
 
@@ -68,7 +70,8 @@ The basic layout of a Rubin camera FITS file is shown in Fig.~\ref{fig:layout}.
 There is a primary header, with no data, containing the FITS headers for this observation.
 Then there are 16 HDUs, named \texttt{SegmentNN}, with the data from each amplifier along with headers specific to that amplifier.
 The data values are 32-bit integers compressed using the Rice compression algorithm \citep{2012arXiv1201.1336W}.
-Finally there are two extensions describing the condition of the readout electronics board (\texttt{REB\_COND}) and checksums calculated from the camera configuration (\texttt{CONFIG\_COND}).
+There are then two extensions describing the condition of the readout electronics board (\texttt{REB\_COND}) and checksums calculated from the camera configuration (\texttt{CONFIG\_COND}).
+The final two extensions contain the measured position of the shutter when it opens and the shutter when it closes.
 
 \begin{figure}
   \begin{center}
@@ -93,13 +96,18 @@ No.    Name      Ver    Type      Cards   Dimensions   Format
  16  Segment00     1 CompImageHDU    115   (576, 2048)   int32
  17  REB_COND      1 BinTableHDU    107   0R x 0C   []
  18  CONFIG_COND    1 BinTableHDU     26   0R x 0C   []
+ 19  OPEN          1 BinTableHDU     45   364R x 6C   [A6, A23, D, D, A2, L]
+ 20  CLOSE         1 BinTableHDU     45   366R x 6C   [A6, A23, D, D, A2, L]
 \end{verbatim}
 \end{center}
-\caption{Layout of a LSSTCam raw file.}
+\caption{Layout of a LSSTCam raw file (version 101).}
 \label{fig:layout}
 \end{figure}
 
 \section{FITS Headers}
+
+The headers described in this document match the headers being used for the date this document was created.
+The changes for different header versions are documented in Appendix~\ref{app:headver}.
 
 \subsection{LSSTCam Header}
 
@@ -126,18 +134,51 @@ The definitions of how specific timing FITS headers relate to events inside the 
 \appendix
 
 \section{Version Changes}
+\label{app:headver}
 
-When the FITS header schema is changed in any way there is a corresponding increment to the value stored in the \texttt{HEADVER} FITS card.
-This document describes the file format starting with version 2, which is the version that was used from the beginning of commissioning.
+When the FITS header schema or file layout is changed in any way there is a corresponding increment to the value stored in the \texttt{HEADVER} FITS card.
 
 Errors in the contents of specific FITS headers are not documented here but are instead handled by the \texttt{astro\_metadata\_translator} package \footnote{\url{https://astro-metadata-translator.lsst.io/}} in conjunction with the \texttt{obs\_lsst} package that are both part of the LSST Science Pipelines \citedsp{PSTN-019}.
 In particular, if you are not using the LSST Science Pipelines to read the raw data via the Data Butler \citep{2022SPIE12189E..11J}, some headers are likely to be incorrect or missing if you do not manually run the \texttt{astro\_metadata\_translator.fix\_header()} function on the primary header.
 
-\subsection{Version 3}
+Note that LSSTCam and LATISS change header versions independently.
+
+\subsection{Version 2}
+
+This was the version of the header used for commissioning and pre-operations.
+Data Preview 1 \citedsp{RTN-095} and most of Data Preview 2 will use this header version.
+
+\subsection{Version 100}
+
+Version 100 first appeared for LSSTCam in observation 20251017\#22.
+All observations taken during observatory formal operations will have at least this version.
 
 \begin{itemize}
 \item The \texttt{DATE} header is now correctly being reported in UTC timescale, conforming with the FITS standard \citep{2010A&A...524A..42P}.
-\item Removed the \texttt{MJD} header card as it was confusing to users since whilst \texttt{DATE} is part of the standard, the MJD equivalent is not, and it would not be clear whether it was UTC or matched \texttt{TIMESYS}.
+\item Added \texttt{TELAPSE} header corresponding to the elapsed exposure time.
+      This corresponds to the total integration time and is identical to the existing \texttt{DARKTIME} header value.
+      This header should be used in preference since it is formally part of the FITS standard 4.0 \citep{FITS4}.
+\item Added \texttt{XPOSURE} header corresponding to the effective exposure duration.
+      This is the same as \texttt{SHUTTIME} when the shutter was opened or \texttt{EXPTIME} when the shutter was not opened.
+      This header should be used in preference to those other headers when determining the effective exposure time since it is formally part of the FITS standard 4.0 \citep{FITS4}.
+\end{itemize}
+
+\subsection{Version 101}
+
+Version 101 first appeared for LSSTCam in observation 20251029\#1.
+
+\begin{itemize}
+  \item Added \texttt{HIERARCH SHUTTER} headers to the primary header providing fit parameters for the shutter closing and opening.
+  \item Added two additional HDUs named \texttt{OPEN} and \texttt{CLOSE} containing the profile fits and shutter measurements.
+  The shutter measurements are found in the binary tables.
+\end{itemize}
+
+\subsection{Version 102}
+
+Version 102 first appeared for LSSTCam in observation 20251209\#8.
+
+\begin{itemize}
+  \item Added \texttt{SEQCLOCK} header to indicate the clock period of the REB/sequencer.
 \end{itemize}
 
 \section{Acknowledgements}
