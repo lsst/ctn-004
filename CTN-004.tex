@@ -43,7 +43,7 @@ At the NSF-DOE Vera C. Rubin Observatory we write data from the LSSTCam and LATI
 % See LPM-51 for version number policy.
 \setDocChangeRecord{%
   \addtohist{1}{2025-08-12}{First version with basic descriptions.}{Jenness}
-  \addtohist{2}{2025-11-03}{Describer HEADVER 100 and 101.}{Jenness}
+  \addtohist{2}{2025-11-03}{Describer HEADVER 100, 101 and 102.}{Jenness}
 }
 
 
@@ -141,6 +141,8 @@ When the FITS header schema or file layout is changed in any way there is a corr
 Errors in the contents of specific FITS headers are not documented here but are instead handled by the \texttt{astro\_metadata\_translator} package \footnote{\url{https://astro-metadata-translator.lsst.io/}} in conjunction with the \texttt{obs\_lsst} package that are both part of the LSST Science Pipelines \citedsp{PSTN-019}.
 In particular, if you are not using the LSST Science Pipelines to read the raw data via the Data Butler \citep{2022SPIE12189E..11J}, some headers are likely to be incorrect or missing if you do not manually run the \texttt{astro\_metadata\_translator.fix\_header()} function on the primary header.
 
+Note that LSSTCam and LATISS change header versions independently.
+
 \subsection{Version 2}
 
 This was the version of the header used for commissioning and pre-operations.
@@ -148,7 +150,7 @@ Data Preview 1 \citedsp{RTN-095} and most of Data Preview 2 will use this header
 
 \subsection{Version 100}
 
-Version 100 first appeared for observation 20251017\#22.
+Version 100 first appeared for LSSTCam in observation 20251017\#22.
 All observations taken during observatory formal operations will have at least this version.
 
 \begin{itemize}
@@ -163,7 +165,7 @@ All observations taken during observatory formal operations will have at least t
 
 \subsection{Version 101}
 
-Version 101 first appeared for observation 20251029\#1.
+Version 101 first appeared for LSSTCam in observation 20251029\#1.
 
 \begin{itemize}
   \item Added \texttt{HIERARCH SHUTTER} headers to the primary header providing fit parameters for the shutter closing and opening.
@@ -173,7 +175,7 @@ Version 101 first appeared for observation 20251029\#1.
 
 \subsection{Version 102}
 
-Version 102 first appeared for observation 20251209\#8.
+Version 102 first appeared for LSSTCam in observation 20251209\#8.
 
 \begin{itemize}
   \item Added \texttt{SEQCLOCK} header to indicate the clock period of the REB/sequencer.
